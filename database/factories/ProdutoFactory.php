@@ -2,8 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Api\Produto;
-use App\Api\Categoria;
+use App\Model\Api\Produto;
+use App\Model\Api\Categoria;
 use Faker\Generator as Faker;
 
 $factory->define(Produto::class, function (Faker $faker) {
