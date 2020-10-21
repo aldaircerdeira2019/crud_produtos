@@ -1952,6 +1952,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -38199,7 +38206,67 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(produto.quantidade))]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(produto.created_at))])
+                          _c("td", [
+                            _c(
+                              "button",
+                              {
+                                ref: "#",
+                                refInFor: true,
+                                staticClass: "btn btn-primary btn-sm",
+                                attrs: {
+                                  type: "button",
+                                  "data-toggle": "modal",
+                                  "data-target": "#"
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-eye",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                ref: "#",
+                                refInFor: true,
+                                staticClass: "btn btn-success btn-sm",
+                                attrs: {
+                                  type: "button",
+                                  "data-toggle": "modal",
+                                  "data-target": "#"
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-pencil-square-o",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                ref: "#",
+                                refInFor: true,
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: {
+                                  type: "button",
+                                  "data-toggle": "modal",
+                                  "data-target": "#"
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-trash-o",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            )
+                          ])
                         ])
                       }),
                       0
@@ -38260,7 +38327,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("quantidade")]),
         _vm._v(" "),
-        _c("th", [_vm._v("cadastrado em")])
+        _c("th", [_vm._v("ação")])
       ])
     ])
   }
