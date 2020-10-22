@@ -6,17 +6,26 @@
             <div class="modal-dialog modal-dialog-centered modal-ms">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5>Novo Prduto</h5>
+                        <h5>Novo Produto</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="card-body">
                         <form>
-                            <!-- <div class="form-group">
-                                <label for="categoria_id" class="col-form-label">Id da categoria:</label>
-                                <input type="text"class="form-control" id="categoria_id" required placeholder="ID integer">
-                            </div> -->
+                            <div v-if="msg" class="alert alert-success" role="alert">
+                                Produto cadastrado com sucesso!
+                            </div>
+                            <div class="form-group">
+                                <label for="categoria_id" class="col-form-label">Categoria</label>
+                                <select v-model="categoria_id" type="text"  class="form-control" id="categoria_id">
+                                    <option value="">selecione</option>
+                                    <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.categoria}}</option>
+                                </select>
+                                <span v-if="errors.categoria_id" style="color:red;" >
+                                    <strong >{{ errors.categoria_id[0] }}</strong>
+                                </span>
+                            </div>
                             <div class="form-group">
                                 <label for="nome" class="col-form-label">Nome</label>
                                 <input type="text" v-model="nome" class="form-control" id="nome" placeholder="nome">
@@ -69,13 +78,15 @@
     export default {
         data() {
             return {
-                categoria_id         : '1',
+                categorias: [],
+                categoria_id : '',
                 nome         : '',
                 descricao    : '',
                 valor_a_vista: '',
                 valor_a_prazo: '',
                 quantidade   : '',
-                errors        : [],
+                errors       : [],
+                msg          : '',
                 money: {
                     decimal: ',',
                     thousands: '.',
@@ -86,9 +97,9 @@
             }
         },
 
-        /* mounted() {
-            this.getResults();
-        },*/
+        mounted() {
+            this.getCategorias();
+        },
 
         methods: {
             storeProduto() {
@@ -100,9 +111,27 @@
                     valor_a_prazo: this.valor_a_prazo ,
                     quantidade   : this.quantidade ,
                 }).then(response => {
-                    
+                    if(response.data.create_produto){
+                        this.categoria_id       = '';
+                        this.nome               = '';
+                        this.descricao          = '';
+                        this.valor_a_vista      = '';
+                        this.valor_a_prazo      = '';
+                        this.quantidade         = '';
+                        this.msg                = true;
+                        this.errors             = '';
+                    }
                     if(response.data.errors){
                         this.errors = response.data.errors;
+                        this.msg    = '';
+                    }
+                });
+            },
+            getCategorias() {
+                axios.get('http://127.0.0.1:8000/api/categoria')
+                .then(response => {
+                    if(response.data.categoria){
+                        this.categorias =  response.data.categoria;
                     }
                 });
             }

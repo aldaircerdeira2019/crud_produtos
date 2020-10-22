@@ -1976,17 +1976,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      categoria_id: '1',
+      categorias: [],
+      categoria_id: '',
       nome: '',
       descricao: '',
       valor_a_vista: '',
       valor_a_prazo: '',
       quantidade: '',
       errors: [],
+      msg: '',
       money: {
         decimal: ',',
         thousands: '.',
@@ -1996,10 +2007,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-
-  /* mounted() {
-      this.getResults();
-  },*/
+  mounted: function mounted() {
+    this.getCategorias();
+  },
   methods: {
     storeProduto: function storeProduto() {
       var _this = this;
@@ -2012,8 +2022,29 @@ __webpack_require__.r(__webpack_exports__);
         valor_a_prazo: this.valor_a_prazo,
         quantidade: this.quantidade
       }).then(function (response) {
+        if (response.data.create_produto) {
+          _this.categoria_id = '';
+          _this.nome = '';
+          _this.descricao = '';
+          _this.valor_a_vista = '';
+          _this.valor_a_prazo = '';
+          _this.quantidade = '';
+          _this.msg = true;
+          _this.errors = '';
+        }
+
         if (response.data.errors) {
           _this.errors = response.data.errors;
+          _this.msg = '';
+        }
+      });
+    },
+    getCategorias: function getCategorias() {
+      var _this2 = this;
+
+      axios.get('http://127.0.0.1:8000/api/categoria').then(function (response) {
+        if (response.data.categoria) {
+          _this2.categorias = response.data.categoria;
         }
       });
     }
@@ -38365,6 +38396,88 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
                 _c("form", [
+                  _vm.msg
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "alert alert-success",
+                          attrs: { role: "alert" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Produto cadastrado com sucesso!\n                        "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-form-label",
+                        attrs: { for: "categoria_id" }
+                      },
+                      [_vm._v("Categoria")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.categoria_id,
+                            expression: "categoria_id"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "categoria_id" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.categoria_id = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("selecione")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.categorias, function(categoria) {
+                          return _c(
+                            "option",
+                            {
+                              key: categoria.id,
+                              domProps: { value: categoria.id }
+                            },
+                            [_vm._v(_vm._s(categoria.categoria))]
+                          )
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.categoria_id
+                      ? _c("span", { staticStyle: { color: "red" } }, [
+                          _c("strong", [
+                            _vm._v(_vm._s(_vm.errors.categoria_id[0]))
+                          ])
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "label",
@@ -38605,7 +38718,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", [_vm._v("Novo Prduto")]),
+      _c("h5", [_vm._v("Novo Produto")]),
       _vm._v(" "),
       _c(
         "button",
