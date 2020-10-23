@@ -9,6 +9,7 @@ window.Vue = require('vue');
 Vue.use(money, {precision: 4})
 Vue.component('produtos', require('./components/site/produtos.vue').default);
 Vue.component('create', require('./components/site/produto.create.vue').default);
+Vue.component('edit', require('./components/site/produto.edit.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 const app = new Vue({

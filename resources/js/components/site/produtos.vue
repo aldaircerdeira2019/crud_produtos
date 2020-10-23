@@ -8,6 +8,7 @@
                         <create></create>
                     </div>
                     <div class="card-body">
+                        <button class="btn-success btn-sm" @click.prevent="getResults()" type="button"><i class="fa fa-refresh"></i> atualizar</button>
                         <div class="table table-hover table-responsive" style="max-width: 1200px">
                             <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -32,47 +33,12 @@
                                         <td>{{produto.valor_a_prazo}}</td>
                                         <td>{{produto.quantidade}}</td>
                                         <td>
-                                            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ShowModal" ref="#"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                                            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#" ref="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#" ref="#"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                            <edit :produto="produto"></edit>
                                         </td>
-                                        <!-- <td>{{produto.created_at}}</td> -->
                                     </tr>
                                 </tbody>
                             </table> 
                             <pagination :data="produtos" @pagination-change-page="getResults"></pagination>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="ShowModal" tabindex="-1" role="dialog" aria-labelledby="ShowModalLabel" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-ms">
-                <div class="modal-content">
-                    <div class="modal-header"> 
-                        <div id='btn'></div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <div  id="aguardando" >
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-success" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='card'>
-                            <div class='card-body'>
-                                <div id="conteudo">
-                                </div>
-                                
-                                <ul><div style="color: darkgreen">Elenco:</div>
-                                    <div id='lista'></div>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
