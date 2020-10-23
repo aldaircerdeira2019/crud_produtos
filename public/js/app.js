@@ -2257,6 +2257,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2273,6 +2277,19 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get('http://127.0.0.1:8000/api/produto/?page=' + page).then(function (response) {
         _this.produtos = response.data.produtos;
+      });
+    },
+    deleteProduto: function deleteProduto(id) {
+      var _this2 = this;
+
+      axios["delete"]('http://127.0.0.1:8000/api/produto/' + id).then(function (response) {
+        if (response.data.sucess) {
+          alert(response.data.sucess);
+
+          _this2.getResults();
+        } else if (response.data.erro) {
+          alert(response.data.erro);
+        }
       });
     }
   }
@@ -39347,7 +39364,29 @@ var render = function() {
                             "td",
                             [_c("edit", { attrs: { produto: produto } })],
                             1
-                          )
+                          ),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.deleteProduto(produto.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-trash-o",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            )
+                          ])
                         ])
                       }),
                       0
@@ -39387,7 +39426,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("quantidade")]),
         _vm._v(" "),
-        _c("th", [_vm._v("ação")])
+        _c("th", [_vm._v("editar")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("deletar")])
       ])
     ])
   }

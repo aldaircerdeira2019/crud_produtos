@@ -19,7 +19,8 @@
                                         <th>Valor à vista</th>
                                         <th>Valor à prazo</th>
                                         <th>quantidade</th>
-                                        <th>ação</th>
+                                        <th>editar</th>
+                                        <th>deletar</th>
                                        <!--  <th>cadastrado em</th> -->
 
                                     </tr>
@@ -35,6 +36,9 @@
                                         <td>
                                             <edit :produto="produto"></edit>
                                         </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" type="button" @click.prevent="deleteProduto(produto.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table> 
@@ -43,7 +47,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  
     </div>
 </template>
 
@@ -66,7 +70,20 @@
             .then(response => {
                 this.produtos = response.data.produtos;
             });
-		}
+        },
+        deleteProduto(id){
+            axios.delete('http://127.0.0.1:8000/api/produto/'+ id)
+            .then(response => {
+                if(response.data.sucess){
+                    alert(response.data.sucess);
+                    this.getResults();
+                }
+                else
+                if(response.data.erro){
+                    alert(response.data.erro);
+                }
+            })
+        }
 	}
 }
 </script>
